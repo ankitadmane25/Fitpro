@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitPro+ - Complete Fitness & Nutrition App</title>
+    <style>
+        :root {
+            --primary-blue: #2563eb;
+            --secondary-blue: #1d4ed8;
+            --light-blue: #3b82f6;
+            --accent-blue: #60a5fa;
+            --sky-blue: #0ea5e9;
+            --cyan: #06b6d4;
+            --white: #ffffff;
+            --off-white: #f8fafc;
+            --light-gray: #f1f5f9;
+            --gray: #64748b;
+            --dark-gray: #334155;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --shadow: rgba(37, 99, 235, 0.1);
+            --shadow-lg: rgba(37, 99, 235, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            color: var(--dark-gray);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Animated background elements */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(37, 99, 235, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(96, 165, 250, 0.06) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(180deg); }
+        }
+
+        header {
+            background: var(--white);
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+            box-shadow: 0 4px 6px -1px var(--shadow), 0 2px 4px -1px var(--shadow);
+            color: var(--primary-blue);
+            padding: 2rem 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+            background: linear-gradient(135deg, var(--primary-blue), var(--sky-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        header p {
+            font-size: 1.2rem;
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .hero {
+            background: var(--white);
+            border: 2px solid rgba(37, 99, 235, 0.1);
+            border-radius: 24px;
+            padding: 4rem 2rem;
+            margin: 3rem auto;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px var(--shadow-lg);
+            animation: slideInDown 1s ease-out;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--sky-blue), var(--cyan), var(--sky-blue), var(--primary-blue));
+            background-size: 400% 100%;
+            animation: gradient-shift 3s ease infinite;
+        }
+
+        @keyframes gradient-shift {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent 0deg, rgba(37, 99, 235, 0.03) 90deg, transparent 180deg);
+            animation: rotate 15s linear infinite;
+            pointer-events: none;
+        }
+
+        .hero h2 {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary-blue);
+            font-weight: 700;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            color: var(--gray);
+            position: relative;
+            z-index: 2;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .calculator {
+            background: var(--white);
+            border: 2px solid rgba(37, 99, 235, 0.1);
+            padding: 3rem;
+            border-radius: 24px;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px var(--shadow-lg);
+            animation: slideInUp 1s ease-out 0.3s both;
+        }
+
+        .calculator::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--light-blue), var(--accent-blue));
+            animation: progress 2s ease-out;
+        }
+
+        @keyframes progress {
+            from { width: 0%; }
+            to { width: 100%; }
+        }
+
+        .calculator h2 {
+            color: var(--primary-blue);
+            margin-bottom: 2.5rem;
+            font-size: 2.5rem;
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+        }
+
+        .calculator h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 2px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            position: relative;
+            margin-bottom: 2rem;
+        }
+
+        .form-group::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            transition: width 0.5s ease;
+            border-radius: 2px;
+        }
+
+        .form-group:focus-within::before {
+            width: 100%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 600;
+            color: var(--primary-blue);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 1.2rem 1.5rem;
+            border: 2px solid rgba(37, 99, 235, 0.2);
+            border-radius: 16px;
+            font-size: 1.1rem;
+            background: var(--white);
+            color: var(--dark-gray);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.1), 0 10px 25px -5px var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        input:valid {
+            border-color: var(--success);
+        }
+
+        button {
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: var(--white);
+            border: none;
+            padding: 1.5rem 3rem;
+            border-radius: 16px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 25px -5px var(--shadow-lg);
+        }
+
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s ease;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 20px 40px -10px var(--shadow-lg);
+            background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+        }
+
+        button:hover::before {
+            left: 100%;
+        }
+
+        button:active {
+            transform: translateY(-1px);
+        }
+
+        .result {
+            margin-top: 2.5rem;
+            padding: 2rem;
+            border-radius: 20px;
+            text-align: center;
+            font-weight: 600;
+            display: none;
+            position: relative;
+            overflow: hidden;
+            animation: slideInUp 0.6s ease-out;
+            border: 2px solid;
+        }
+
+        .result h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .result p {
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .success {
+            background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(16, 185, 129, 0.05));
+            color: var(--success);
+            border-color: var(--success);
+        }
+
+        .warning {
+            background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(245, 158, 11, 0.05));
+            color: var(--warning);
+            border-color: var(--warning);
+        }
+
+        .danger {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+            color: var(--danger);
+            border-color: var(--danger);
+        }
+
+        .section-title {
+            margin: 4rem 0 3rem;
+            color: var(--primary-blue);
+            font-size: 2.8rem;
+            font-weight: 700;
+            text-align: center;
+            position: relative;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .section-title::before {
+            content: '';
+            position: absolute;
+            top: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--accent-blue));
+            border-radius: 3px;
+        }
+
+        .section-title::after {
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent-blue), var(--primary-blue));
+            border-radius: 2px;
+        }
+
+        .workouts, .diet-plans {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin: 3rem 0;
+        }
+
+        .workout-card, .diet-card {
+            background: var(--white);
+            border: 2px solid rgba(37, 99, 235, 0.1);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            box-shadow: 0 10px 30px -5px var(--shadow);
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .workout-card:hover, .diet-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 35px 60px -10px var(--shadow-lg);
+            border-color: var(--primary-blue);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-blue), var(--light-blue));
+            color: var(--white);
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.8s ease;
+        }
+
+        .workout-card:hover .card-header::before,
+        .diet-card:hover .card-header::before {
+            transform: translateX(100%);
+        }
+
+        .card-header h3 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-header p {
+            font-size: 1rem;
+            opacity: 0.9;
+            position: relative;
+            z-index: 2;
+        }
+
+        .card-body {
+            padding: 2.5rem;
+            background: var(--white);
+        }
+
+        .card-body p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: var(--gray);
+            font-size: 1.1rem;
+        }
+
+        .exercise-list {
+            list-style: none;
+            padding: 0;
+            margin-top: 1.5rem;
+        }
+
+        .exercise-list li {
+            padding: 1rem;
+            margin: 0.8rem 0;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(59, 130, 246, 0.03));
+            border-left: 4px solid var(--primary-blue);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .exercise-list li:hover {
+            transform: translateX(10px);
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(59, 130, 246, 0.05));
+            box-shadow: 0 5px 15px -3px var(--shadow);
+        }
+
+        .exercise-list li::before {
+            content: '💪';
+            margin-right: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .food-icon {
+            width: 100%;
+            height: 180px;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(96, 165, 250, 0.05));
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 2rem;
+            border-radius: 20px;
+            font-size: 5rem;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid rgba(37, 99, 235, 0.1);
+        }
+
+        .food-icon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(from 0deg at 50% 50%, transparent, rgba(37, 99, 235, 0.1), transparent);
+            animation: rotate 10s linear infinite;
+        }
+
+        .meal-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .meal-list li {
+            padding: 1.5rem;
+            border-bottom: 1px solid rgba(37, 99, 235, 0.1);
+            transition: all 0.3s ease;
+            border-radius: 12px;
+            margin-bottom: 0.5rem;
+        }
+
+        .meal-list li:hover {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.05), rgba(96, 165, 250, 0.03));
+            transform: translateX(10px);
+            box-shadow: 0 5px 15px -3px var(--shadow);
+        }
+
+        .meal-list li:last-child {
+            border-bottom: none;
+        }
+
+        .meal-time {
+            font-weight: 700;
+            color: var(--primary-blue);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .meal-food {
+            color: var(--gray);
+            font-size: 1rem;
+            line-height: 1.6;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(96, 165, 250, 0.05));
+            padding: 1.5rem;
+            border-radius: 16px;
+            text-align: center;
+            border: 2px solid rgba(37, 99, 235, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px var(--shadow);
+        }
+
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--gray);
+            font-weight: 500;
+        }
+
+        footer {
+            background: var(--white);
+            border-top: 2px solid rgba(37, 99, 235, 0.1);
+            color: var(--gray);
+            text-align: center;
+            padding: 3rem 0;
+            margin-top: 4rem;
+            position: relative;
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-blue), var(--sky-blue), var(--cyan));
+        }
+
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* Loading animation */
+        .loading {
+            position: relative;
+            pointer-events: none;
+        }
+
+        .loading::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 24px;
+            height: 24px;
+            margin: -12px 0 0 -12px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-top: 3px solid var(--white);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Interactive elements */
+        .interactive-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(37, 99, 235, 0.1), rgba(96, 165, 250, 0.05));
+            animation: float-shapes 20s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            top: 20%;
+            left: 10%;
+            animation-delay: 0s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            top: 60%;
+            right: 15%;
+            animation-delay: 5s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            bottom: 30%;
+            left: 80%;
+            animation-delay: 10s;
+        }
+
+        @keyframes float-shapes {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            33% { transform: translateY(-30px) rotate(120deg); }
+            66% { transform: translateY(15px) rotate(240deg); }
+        }
+
+        @media (max-width: 768px) {
+            .workouts, .diet-plans {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h2 {
+                font-size: 2rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .calculator {
+                padding: 2rem;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="interactive-bg">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <header>
+        <div class="container">
+            <h1>FitPro+</h1>
+            <p>Your Premium Fitness & Nutrition Partner</p>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="hero">
+            <h2>Transform Your Body, Transform Your Life</h2>
+            <p>Get AI-powered, personalized workout routines and nutrition plans designed specifically for your unique body metrics, fitness goals, and lifestyle preferences</p>
+        </section>
+
+        <section class="calculator">
+            <h2>Personal Fitness Calculator</h2>
+            <form id="fitness-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="weight">Weight (kg)</label>
+                        <input type="number" id="weight" required min="30" max="200" placeholder="Enter your weight">
+                    </div>
+                    <div class="form-group">
+                        <label for="height">Height (cm)</label>
+                        <input type="number" id="height" required min="100" max="250" placeholder="Enter your height">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="experience">Fitness Experience Level</label>
+                    <select id="experience" required>
+                        <option value="">Select your fitness level</option>
+                        <option value="beginner">Beginner (0-6 months)</option>
+                        <option value="intermediate">Intermediate (6 months - 2 years)</option>
+                        <option value="professional">Professional (2+ years)</option>
+                    </select>
+                </div>
+                <button type="submit" id="calc-btn">Generate My Personalized Plan</button>
+            </form>
+            <div id="result" class="result"></div>
+        </section>
+
+        <h2 class="section-title">Personalized Workout Programs</h2>
+        <section class="workouts">
+            <div id="workout-container">
+                <!-- Workouts will be dynamically inserted here -->
+            </div>
+        </section>
+
+        <h2 class="section-title">Custom Nutrition Plans</h2>
+        <section class="diet-plans">
+            <div id="diet-container">
+                <!-- Diet plans will be dynamically inserted here -->
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 BlueBracet. All rights reserved. | Powered by Advanced AI Fitness Technology</p>
+        </div>
+    </footer>
+
+
+    <script>
+        document.getElementById('fitness-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value) / 100; // convert to meters
+            const experience = document.getElementById('experience').value;
+            
+            const bmi = weight / (height * height);
+            
+            let status, message, resultClass;
+            
+            if (bmi < 18.5) {
+                status = "Underweight";
+                message = `Your BMI is ${bmi.toFixed(1)} (Underweight). As a ${experience}, focus on strength training and proper nutrition.`;
+                resultClass = "warning";
+            } else if (bmi >= 18.5 && bmi < 25) {
+                status = "Normal weight";
+                message = `Your BMI is ${bmi.toFixed(1)} (Normal weight). As a ${experience}, you can focus on maintaining your fitness.`;
+                resultClass = "success";
+            } else if (bmi >= 25 && bmi < 30) {
+                status = "Overweight";
+                message = `Your BMI is ${bmi.toFixed(1)} (Overweight). As a ${experience}, focus on cardio and full-body workouts.`;
+                resultClass = "warning";
+            } else {
+                status = "Obese";
+                message = `Your BMI is ${bmi.toFixed(1)} (Obese). As a ${experience}, start with low-impact exercises and consult a professional.`;
+                resultClass = "danger";
+            }
+            
+            const resultDiv = document.getElementById('result');
+            resultDiv.textContent = message;
+            resultDiv.className = `result ${resultClass}`;
+            resultDiv.style.display = 'block';
+            
+            // Generate recommended workouts and diet plans
+            generateWorkouts(experience, bmi);
+            generateDietPlan(weight, status, experience);
+        });
+
+        function generateDietPlan(weight, status, experience) {
+            const dietContainer = document.getElementById('diet-container');
+            dietContainer.innerHTML = '';
+            
+            let dietPlan = {
+                title: '',
+                description: '',
+                days: []
+            };
+            
+            // Underweight - 7 day plan for weight gain
+            if (status === "Underweight") {
+                dietPlan.title = '7-Day Indian Weight Gain Diet Plan';
+                dietPlan.description = `High-calorie Indian diet plan (~${Math.round(weight * 35)} kcal/day) to support healthy weight gain`;
+                
+                // Day 1
+                dietPlan.days.push({
+                    day: 'Day 1',
+                    meals: [
+                        { time: 'Breakfast', items: '2 Besan chilla with paneer stuffing + 1 glass full-fat milk with banana' },
+                        { time: 'Mid-morning', items: '1 handful mixed nuts + 1 banana' },
+                        { time: 'Lunch', items: '2 roti + 1 cup dal + 1 cup vegetable sabzi + 1 cup curd + 1 tbsp ghee' },
+                        { time: 'Evening', items: '1 peanut butter sandwich + 1 glass mango shake' },
+                        { time: 'Dinner', items: '1 cup khichdi with ghee + 1 cup raita + 1 jaggery' }
+                    ]
+                });
+                
+                // Day 2
+                dietPlan.days.push({
+                    day: 'Day 2',
+                    meals: [
+                        { time: 'Breakfast', items: '3 idli with sambar + 1 tbsp coconut chutney + 1 glass banana milkshake' },
+                        { time: 'Mid-morning', items: '1 cup poha with peanuts + 1 glass lassi' },
+                        { time: 'Lunch', items: '1 cup rice + 1 cup sambar + 1 cup vegetable curry + 1 cup curd with sugar' },
+                        { time: 'Evening', items: '1 cup upma with vegetables + 1 glass badam milk' },
+                        { time: 'Dinner', items: '2 roti + 1 cup paneer butter masala + 1 cup dal' }
+                    ]
+                });
+                
+                // Day 3
+                dietPlan.days.push({
+                    day: 'Day 3',
+                    meals: [
+                        { time: 'Breakfast', items: '2 stuffed paratha with curd + 1 glass banana shake' },
+                        { time: 'Mid-morning', items: '1 cup chana chaat + 1 glass mango lassi' },
+                        { time: 'Lunch', items: '1 cup rice + 1 cup rajma + 1 cup vegetable + 1 cup raita' },
+                        { time: 'Evening', items: '1 vegetable sandwich with cheese + 1 glass milkshake' },
+                        { time: 'Dinner', items: '2 roti + 1 cup chole + 1 cup vegetable + 1 tbsp ghee' }
+                    ]
+                });
+                
+                // Day 4
+                dietPlan.days.push({
+                    day: 'Day 4',
+                    meals: [
+                        { time: 'Breakfast', items: '3 paneer dosa with chutney + 1 glass full-fat milk' },
+                        { time: 'Mid-morning', items: '1 cup makhana + 1 glass banana shake' },
+                        { time: 'Lunch', items: '2 roti + 1 cup dal makhani + 1 cup vegetable + 1 cup curd' },
+                        { time: 'Evening', items: '1 cup sev puri + 1 glass badam milk' },
+                        { time: 'Dinner', items: '1 cup vegetable pulao + 1 cup raita + 1 jaggery' }
+                    ]
+                });
+                
+                // Day 5
+                dietPlan.days.push({
+                    day: 'Day 5',
+                    meals: [
+                        { time: 'Breakfast', items: '2 moong dal chilla with paneer + 1 glass lassi' },
+                        { time: 'Mid-morning', items: '1 cup dry fruits + 1 banana' },
+                        { time: 'Lunch', items: '1 cup rice + 1 cup sambar + 1 cup vegetable curry + 1 cup curd' },
+                        { time: 'Evening', items: '1 cup poha with peanuts + 1 glass mango shake' },
+                        { time: 'Dinner', items: '2 roti + 1 cup dal + 1 cup vegetable sabzi + 1 tbsp ghee' }
+                    ]
+                });
+                
+                // Day 6
+                dietPlan.days.push({
+                    day: 'Day 6',
+                    meals: [
+                        { time: 'Breakfast', items: '2 stuffed paratha with butter + 1 glass banana milkshake' },
+                        { time: 'Mid-morning', items: '1 handful nuts + 1 glass lassi' },
+                        { time: 'Lunch', items: '2 roti + 1 cup chana masala + 1 cup vegetable + 1 cup raita' },
+                        { time: 'Evening', items: '1 vegetable sandwich with cheese + 1 glass badam milk' },
+                        { time: 'Dinner', items: '1 cup khichdi with ghee + 1 cup curd + 1 jaggery' }
+                    ]
+                });
+                
+                // Day 7
+                dietPlan.days.push({
+                    day: 'Day 7',
+                    meals: [
+                        { time: 'Breakfast', items: '3 idli with sambar + 1 tbsp coconut chutney + 1 glass banana shake' },
+                        { time: 'Mid-morning', items: '1 cup chana chaat + 1 glass lassi' },
+                        { time: 'Lunch', items: '1 cup rice + 1 cup dal + 1 cup vegetable curry + 1 cup curd' },
+                        { time: 'Evening', items: '1 cup upma with vegetables + 1 glass milkshake' },
+                        { time: 'Dinner', items: '2 roti + 1 cup paneer butter masala + 1 cup dal' }
+                    ]
+                });
+            }
+            // Normal weight - 15 day maintenance plan
+            else if (status === "Normal weight") {
+                dietPlan.title = '15-Day Indian Balanced Diet Plan';
+                dietPlan.description = `Balanced Indian diet plan (~${Math.round(weight * 30)} kcal/day) to maintain your healthy weight`;
+                
+                // Week 1
+                for (let i = 1; i <= 7; i++) {
+                    dietPlan.days.push({
+                        day: `Day ${i}`,
+                        meals: [
+                            { time: 'Breakfast', items: i%2===0 ? '2 dosa with sambar + 1 tbsp chutney' : '2 besan chilla + 1 cup curd' },
+                            { time: 'Mid-morning', items: '1 fruit + 1 handful nuts' },
+                            { time: 'Lunch', items: '1 cup rice + 1 cup dal + 1 cup vegetable + 1 cup curd' },
+                            { time: 'Evening', items: '1 cup sprouts chaat or 1 glass buttermilk' },
+                            { time: 'Dinner', items: '2 roti + 1 cup vegetable sabzi + 1 cup dal' }
+                        ]
+                    });
+                }
+                
+                // Week 2
+                for (let i = 8; i <= 15; i++) {
+                    dietPlan.days.push({
+                        day: `Day ${i}`,
+                        meals: [
+                            { time: 'Breakfast', items: i%2===0 ? '1 cup poha with peanuts' : '2 idli with sambar' },
+                            { time: 'Mid-morning', items: '1 glass lassi or 1 fruit' },
+                            { time: 'Lunch', items: '2 roti + 1 cup dal + 1 cup vegetable + 1 cup raita' },
+                            { time: 'Evening', items: '1 cup makhana or 1 handful chana' },
+                            { time: 'Dinner', items: i%2===0 ? '1 cup khichdi + 1 cup vegetable' : '2 roti + 1 cup paneer sabzi' }
+                        ]
+                    });
+                }
+            }
+            // Overweight/Obese - 30 day weight loss plan
+            else {
+                dietPlan.title = '30-Day Indian Weight Loss Diet Plan';
+                dietPlan.description = `Calorie-controlled Indian diet plan (~${Math.round(weight * 25)} kcal/day) for healthy weight loss`;
+                
+                // Week 1
+                for (let i = 1; i <= 7; i++) {
+                    dietPlan.days.push({
+                        day: `Day ${i}`,
+                        meals: [
+                            { time: 'Breakfast', items: i%2===0 ? '1 cup vegetable upma' : '2 moong dal chilla' },
+                            { time: 'Mid-morning', items: '1 fruit (apple/pear/guava)' },
+                            { time: 'Lunch', items: '1 cup brown rice + 1 cup dal + 1 cup vegetable salad' },
+                            { time: 'Evening', items: '1 cup green tea + 1 handful roasted chana' },
+                            { time: 'Dinner', items: '2 jowar/bajra roti + 1 cup vegetable sabzi + 1 cup dal' }
+                        ]
+                    });
+                }
+                
+                // Week 2
+                for (let i = 8; i <= 14; i++) {
+                    dietPlan.days.push({
+                        day: `Day ${i}`,
+                        meals: [
+                            { time: 'Breakfast', items: i%2===0 ? '1 bowl vegetable poha' : '1 bowl sprouts chaat' },
+                            { time: 'Mid-morning', items: '1 glass buttermilk + 1 tsp flaxseeds' },
+                            { time: 'Lunch', items: '2 multigrain roti + 1 cup dal + 1 cup vegetable' },
+                            { time: 'Evening', items: '1 cup green tea + 1 handful makhana' },
+                            { time: 'Dinner', items: '1 cup vegetable khichdi + 1 cup curd' }
+                        ]
+                    });
+                }
+                
+                // Week 3
+                for (let i = 15; i <= 21; i++) {
+                    dietPlan.days.push({
+                        day: `Day ${i}`,
+                        meals: [
+                            { time: 'Breakfast', items: i%2===0 ? '1 bowl vegetable dalia' : '2 besan chilla' },
+                            { time: 'Mid-morning', items: '1 fruit (orange/papaya)' },
+                            { time: 'Lunch', items: '1 cup quinoa/brown rice + 1 cup sambar + 1 cup vegetable' },
+                            { time: 'Evening', items: '1 cup green tea + 1 handful almonds' },
+                            { time: 'Dinner', items: '2 bajra roti + 1 cup vegetable + 1 cup dal' }
+                        ]
+                    });
+                }
+                
+                // Week 4
+                for (let i = 22; i <= 30; i++) {
+                    dietPlan.days.push({
+                        day: `Day ${i}`,
+                        meals: [
+                            { time: 'Breakfast', items: i%2===0 ? '1 bowl vegetable oats' : '1 bowl sprouts moong chilla' },
+                            { time: 'Mid-morning', items: '1 glass coconut water + 1 tsp chia seeds' },
+                            { time: 'Lunch', items: '2 jowar roti + 1 cup dal + 1 cup vegetable salad' },
+                            { time: 'Evening', items: '1 cup green tea + 1 handful walnuts' },
+                            { time: 'Dinner', items: '1 cup vegetable soup + 2 multigrain roti' }
+                        ]
+                    });
+                }
+            }
+            
+            // Create diet plan card
+            const dietCard = document.createElement('div');
+            dietCard.className = 'diet-card';
+            
+            let daysHTML = '';
+            dietPlan.days.forEach(day => {
+                let mealsHTML = '<ul class="meal-list">';
+                day.meals.forEach(meal => {
+                    mealsHTML += `
+                        <li>
+                            <span class="meal-time">${meal.time}:</span> ${meal.items}
+                        </li>
+                    `;
+                });
+                mealsHTML += '</ul>';
+                
+                daysHTML += `
+                    <div class="day-plan">
+                        <div class="day-title">${day.day}</div>
+                        ${mealsHTML}
+                    </div>
+                `;
+            });
+            
+            dietCard.innerHTML = `
+                <div class="card-header">
+                    <h3>${dietPlan.title}</h3>
+                </div>
+                <div class="card-body">
+                    <div class="food-icon">🍛</div>
+                    <p>${dietPlan.description}</p>
+                    ${daysHTML}
+                </div>
+            `;
+            
+            dietContainer.appendChild(dietCard);
+        }
+
+        function generateWorkouts(experience, bmi) {
+            const workoutContainer = document.getElementById('workout-container');
+            workoutContainer.innerHTML = '';
+            
+            let workouts = [];
+            
+            if (experience === 'beginner') {
+                workouts = [
+                    {
+                        title: 'Knee Push-ups',
+                        description: 'Modified push-ups for beginners. Do 3 sets of 5-8 reps.',
+                        tips: 'Keep your core engaged and lower yourself slowly.'
+                    },
+                    {
+                        title: 'Assisted Squats',
+                        description: 'Use a chair for support. Do 3 sets of 8-10 reps.',
+                        tips: 'Focus on form rather than depth. Keep knees behind toes.'
+                    },
+                    {
+                        title: 'Wall Plank',
+                        description: 'Beginner plank variation. Hold for 15-20 seconds, 3 sets.',
+                        tips: 'Lean against a wall at 45 degrees and maintain straight line.'
+                    }
+                ];
+                
+                if (bmi >= 25) {
+                    workouts.push({
+                        title: 'Seated Marches',
+                        description: 'Low impact cardio. Do 3 sets of 20 reps (10 per leg).',
+                        tips: 'Lift knees alternately while seated to reduce joint impact.'
+                    });
+                }
+            } 
+            else if (experience === 'intermediate') {
+                workouts = [
+                    {
+                        title: 'Standard Push-ups',
+                        description: 'Build upper body strength. Do 3 sets of 10-15 reps.',
+                        tips: 'Maintain a straight line from head to heels.'
+                    },
+                    {
+                        title: 'Walking Lunges',
+                        description: 'Dynamic leg exercise. Do 3 sets of 8 reps per leg.',
+                        tips: 'Keep torso upright and step forward with control.'
+                    },
+                    {
+                        title: 'Forearm Plank',
+                        description: 'Core strengthening. Hold for 30-45 seconds, 3 sets.',
+                        tips: 'Engage glutes and keep hips level with shoulders.'
+                    }
+                ];
+                
+                if (bmi >= 25) {
+                    workouts.push({
+                        title: 'Step-ups',
+                        description: 'Cardio and leg strength. Do 3 sets of 10 reps per leg.',
+                        tips: 'Use a sturdy bench or step, alternate legs with control.'
+                    });
+                }
+            } 
+            else { // professional
+                workouts = [
+                    {
+                        title: 'Archer Push-ups',
+                        description: 'Advanced push-up variation. Do 3 sets of 6-8 reps per side.',
+                        tips: 'Shift weight to one arm while extending the other.'
+                    },
+                    {
+                        title: 'Pistol Squats',
+                        description: 'Single-leg squats. Do 3 sets of 5 reps per leg.',
+                        tips: 'Extend one leg forward and maintain balance.'
+                    },
+                    {
+                        title: 'Burpees',
+                        description: 'Full body explosive exercise. Do 3 sets of 10 reps.',
+                        tips: 'Combine squat, push-up, and jump with smooth transitions.'
+                    },
+                    {
+                        title: 'Handstand Push-ups',
+                        description: 'Advanced shoulder exercise. Do 3 sets of 5-8 reps.',
+                        tips: 'Use a wall for support until you develop balance.'
+                    }
+                ];
+                
+                if (bmi >= 25) {
+                    workouts.push({
+                        title: 'Box Jumps',
+                        description: 'Plyometric exercise. Do 3 sets of 8 reps.',
+                        tips: 'Land softly on the box with knees slightly bent.'
+                    });
+                }
+            }
+            
+            workouts.forEach(workout => {
+                const workoutCard = document.createElement('div');
+                workoutCard.className = 'workout-card';
+                
+                workoutCard.innerHTML = `
+                    <div class="card-header">
+                        <h3>${workout.title}</h3>
+                    </div>
+                    <div class="card-body">
+                        <p>${workout.description}</p>
+                        <p><strong>Tips:</strong> ${workout.tips}</p>
+                    </div>
+                `;
+                
+                workoutContainer.appendChild(workoutCard);
+            });
+        }
+    </script>
+</body>
+</html>

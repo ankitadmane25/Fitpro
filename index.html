@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to FitPro</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 25%, #4fc3f7 75%, #29b6f6 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(circle at 20% 80%, rgba(120, 119, 198, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 40%, rgba(79, 195, 247, 0.2) 0%, transparent 50%);
+            pointer-events: none;
+            animation: backgroundShift 8s ease-in-out infinite;
+        }
+
+        @keyframes backgroundShift {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+
+        .welcome-container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(25px);
+            border-radius: 30px;
+            padding: 80px 60px;
+            box-shadow: 
+                0 35px 80px rgba(0, 0, 0, 0.15),
+                0 0 0 1px rgba(255, 255, 255, 0.6);
+            position: relative;
+            max-width: 600px;
+            width: 90%;
+            animation: containerEntrance 1.2s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            transform: translateY(50px);
+            opacity: 0;
+        }
+
+        @keyframes containerEntrance {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .welcome-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: linear-gradient(90deg, #2196F3, #03A9F4, #00BCD4, #2196F3);
+            background-size: 200% 100%;
+            animation: shimmer 3s ease-in-out infinite;
+            border-radius: 30px 30px 0 0;
+        }
+
+        @keyframes shimmer {
+            0%, 100% { background-position: 200% 0; }
+            50% { background-position: -200% 0; }
+        }
+
+        .logo-section {
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 5rem;
+            font-weight: 800;
+            color: #1565C0;
+            letter-spacing: -3px;
+            margin-bottom: 20px;
+            text-shadow: 0 4px 8px rgba(21, 101, 192, 0.2);
+            animation: logoAnimation 2s ease-out 0.5s both;
+            transform: scale(0.8);
+        }
+
+        .logo span {
+            color: #2196F3;
+            position: relative;
+        }
+
+        .logo span::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #2196F3, #03A9F4);
+            border-radius: 2px;
+            animation: underlineGrow 1s ease-out 1.5s both;
+            transform: scaleX(0);
+        }
+
+        @keyframes logoAnimation {
+            to {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes underlineGrow {
+            to {
+                transform: scaleX(1);
+            }
+        }
+
+        .welcome-text {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #1565C0;
+            margin-bottom: 15px;
+            animation: textSlideIn 1s ease-out 1s both;
+            transform: translateY(30px);
+            opacity: 0;
+        }
+
+        @keyframes textSlideIn {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            color: #546E7A;
+            font-weight: 500;
+            margin-bottom: 50px;
+            line-height: 1.6;
+            animation: textSlideIn 1s ease-out 1.3s both;
+            transform: translateY(30px);
+            opacity: 0;
+        }
+
+        .features {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 50px;
+            animation: featuresSlideUp 1s ease-out 1.6s both;
+            transform: translateY(40px);
+            opacity: 0;
+        }
+
+        @keyframes featuresSlideUp {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .feature-item {
+            text-align: center;
+            flex: 1;
+            max-width: 120px;
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.8rem;
+            box-shadow: 0 8px 25px rgba(33, 150, 243, 0.3);
+            animation: iconBounce 2s ease-in-out infinite;
+        }
+
+        .feature-item:nth-child(2) .feature-icon {
+            animation-delay: 0.2s;
+        }
+
+        .feature-item:nth-child(3) .feature-icon {
+            animation-delay: 0.4s;
+        }
+
+        @keyframes iconBounce {
+            0%, 100% { transform: translateY(0) scale(1); }
+            50% { transform: translateY(-5px) scale(1.05); }
+        }
+
+        .feature-text {
+            font-size: 0.95rem;
+            color: #546E7A;
+            font-weight: 600;
+        }
+
+        .cta-button {
+            background: linear-gradient(135deg, #2196F3, #1976D2);
+            color: white;
+            border: none;
+            padding: 20px 50px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 
+                0 8px 30px rgba(33, 150, 243, 0.4),
+                0 4px 8px rgba(33, 150, 243, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            animation: buttonAppear 1s ease-out 1.9s both;
+            transform: translateY(40px);
+            opacity: 0;
+        }
+
+        @keyframes buttonAppear {
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .cta-button:hover {
+            transform: translateY(-4px) scale(1.05);
+            box-shadow: 
+                0 15px 40px rgba(33, 150, 243, 0.5),
+                0 8px 16px rgba(33, 150, 243, 0.3);
+        }
+
+        .cta-button:active {
+            transform: translateY(-2px) scale(1.02);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.6s;
+        }
+
+        .cta-button:hover::before {
+            left: 100%;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: rgba(33, 150, 243, 0.2);
+            border-radius: 2px;
+            margin-top: 40px;
+            overflow: hidden;
+            animation: progressBarAppear 1s ease-out 2.2s both;
+            opacity: 0;
+        }
+
+        @keyframes progressBarAppear {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #2196F3, #03A9F4);
+            border-radius: 2px;
+            width: 0%;
+            animation: progressFill 3s ease-out 2.5s forwards;
+        }
+
+        @keyframes progressFill {
+            to {
+                width: 100%;
+            }
+        }
+
+        .redirect-text {
+            font-size: 0.9rem;
+            color: #90A4AE;
+            margin-top: 20px;
+            animation: redirectTextAppear 1s ease-out 3s both;
+            opacity: 0;
+        }
+
+        @keyframes redirectTextAppear {
+            to {
+                opacity: 1;
+            }
+        }
+
+        .floating-elements {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .floating-shape {
+            position: absolute;
+            border-radius: 50%;
+            animation: float 12s ease-in-out infinite;
+        }
+
+        .floating-shape:nth-child(1) {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.15), rgba(25, 118, 210, 0.15));
+            top: 10%;
+            left: 5%;
+            animation-delay: 0s;
+        }
+
+        .floating-shape:nth-child(2) {
+            width: 180px;
+            height: 180px;
+            background: linear-gradient(135deg, rgba(3, 169, 244, 0.1), rgba(0, 188, 212, 0.1));
+            top: 60%;
+            right: 8%;
+            animation-delay: 4s;
+        }
+
+        .floating-shape:nth-child(3) {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.2), rgba(25, 118, 210, 0.2));
+            bottom: 20%;
+            left: 10%;
+            animation-delay: 8s;
+        }
+
+        .floating-shape:nth-child(4) {
+            width: 140px;
+            height: 140px;
+            background: linear-gradient(135deg, rgba(79, 195, 247, 0.12), rgba(41, 182, 246, 0.12));
+            top: 30%;
+            right: 20%;
+            animation-delay: 2s;
+        }
+
+        @keyframes float {
+            0%, 100% { 
+                transform: translateY(0px) rotate(0deg) scale(1); 
+                opacity: 0.6;
+            }
+            25% { 
+                transform: translateY(-30px) rotate(90deg) scale(1.1); 
+                opacity: 0.8;
+            }
+            50% { 
+                transform: translateY(-15px) rotate(180deg) scale(0.9); 
+                opacity: 1;
+            }
+            75% { 
+                transform: translateY(-25px) rotate(270deg) scale(1.05); 
+                opacity: 0.7;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .welcome-container {
+                padding: 60px 40px;
+            }
+            
+            .logo {
+                font-size: 4rem;
+            }
+            
+            .welcome-text {
+                font-size: 2rem;
+            }
+            
+            .subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .features {
+                flex-direction: column;
+                gap: 25px;
+                align-items: center;
+            }
+            
+            .cta-button {
+                padding: 18px 40px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .welcome-container {
+                padding: 50px 30px;
+            }
+            
+            .logo {
+                font-size: 3.5rem;
+            }
+            
+            .welcome-text {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="floating-elements">
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+        <div class="floating-shape"></div>
+    </div>
+
+    <div class="welcome-container">
+        <div class="logo-section">
+            <div class="logo">Fit<span>Pro</span></div>
+        </div>
+        
+        <h1 class="welcome-text">Welcome to FitPro</h1>
+        <p class="subtitle">Your ultimate fitness companion for achieving health goals, tracking progress, and transforming your lifestyle.</p>
+        
+        <!-- <div class="features">
+            <div class="feature-item">
+                <div class="feature-icon">💪</div>
+                <div class="feature-text">Strength Training</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">📊</div>
+                <div class="feature-text">Progress Tracking</div>
+            </div>
+            <div class="feature-item">
+                <div class="feature-icon">🎯</div>
+                <div class="feature-text">Goal Setting</div>
+            </div>
+        </div>
+         -->
+<a href="auth.html"><button class="cta-button" onclick="redirectToAuth()">Get Started Now</button></a>        
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        
+        <p class="redirect-text">Redirecting you to get started...</p>
+    </div>
+<!-- 
+    <script>
+        // Auto redirect after 5.5 seconds (after all animations complete)
+        setTimeout(() => {
+            redirectToAuth();
+        }, 10000);
+
+        function redirectToAuth() {
+            // Add a smooth fade out effect before redirect
+            const container = document.querySelector('.welcome-container');
+            container.style.transition = 'all 0.8s ease-out';
+            container.style.transform = 'scale(0.95) translateY(-20px)';
+            container.style.opacity = '0';
+            
+            // Redirect after fade out animation
+            setTimeout(() => {
+                // Change this to your actual auth page path
+                window.location.href = 'auth.html';
+            }, 800);
+        }
+
+        // Add some interactive elements
+        document.querySelector('.cta-button').addEventListener('mouseenter', function() {
+            this.style.transform = 'translateY(-4px) scale(1.05)';
+        });
+
+        document.querySelector('.cta-button').addEventListener('mouseleave', function() {
+            this.style.transform = 'translateY(0) scale(1)';
+        });
+
+        // Add click effect to feature icons
+        document.querySelectorAll('.feature-icon').forEach(icon => {
+            icon.addEventListener('click', function() {
+                this.style.transform = 'scale(1.2)';
+                setTimeout(() => {
+                    this.style.transform = 'scale(1)';
+                }, 200);
+            });
+        });
+
+        // Prevent multiple redirects
+        let redirected = false;
+        function redirectToAuth() {
+            if (redirected) return;
+            redirected = true;
+            
+            const container = document.querySelector('.welcome-container');
+            container.style.transition = 'all 0.8s ease-out';
+            container.style.transform = 'scale(0.95) translateY(-20px)';
+            container.style.opacity = '0';
+            
+            setTimeout(() => {
+                window.location.href = 'auth.html';
+            }, 800);
+        }
+    </script> -->
+</body>
+</html>
